@@ -8,7 +8,7 @@ const HomePage = () => {
   const { selectedUser } = useChatStore();
 
   return (
-    <div className="h-screen bg-background flex flex-col pt-16">
+    <div className="h-[calc(100dvh-4rem)] lg:h-[100dvh] bg-background flex flex-col pt-16">
       <Navbar />
       <div className="flex-1 flex overflow-hidden">
         <div className={`h-full w-full lg:w-80 ${selectedUser ? 'hidden lg:block' : 'block'}`}>
