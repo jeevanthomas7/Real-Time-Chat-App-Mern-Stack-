@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { Loader } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
 import { useAuthStore } from './store/useAuthStore';
+import { useChatStore } from './store/useChatStore';
+import { useLocation } from 'react-router-dom';
 
 // Pages
 import HomePage from './pages/HomePage';
@@ -14,6 +16,10 @@ import BottomNav from './components/layout/BottomNav';
 
 function App() {
   const { authUser, checkAuth, isCheckingAuth, connectSocket } = useAuthStore();
+  const { selectedUser } = useChatStore();
+  const location = useLocation();
+
+  const hideBottomNav = !authUser || (selectedUser && location.pathname === '/');
 
   useEffect(() => {
     checkAuth();
@@ -34,7 +40,7 @@ function App() {
   }
 
   return (
-    <div className="bg-background text-text-main min-h-screen pb-16 lg:pb-0">
+    <div className={`bg-background text-text-main min-h-[100dvh] lg:pb-0 ${hideBottomNav ? 'pb-0' : 'pb-16'}`}>
       <Routes>
         <Route path="/" element={authUser ? <HomePage /> : <Navigate to="/login" />} />
         <Route path="/signup" element={!authUser ? <SignUpPage /> : <Navigate to="/" />} />
